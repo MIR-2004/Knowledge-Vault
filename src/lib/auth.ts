@@ -18,6 +18,7 @@ export const auth = betterAuth({
   }),
   baseURL: getBaseUrl(),
   trustedOrigins: [
+    "http://localhost:3000",
     "https://*.vercel.app",
     "https://*.vercel.dev",
   ],
