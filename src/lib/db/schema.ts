@@ -90,6 +90,7 @@ export const pdfDocument = pgTable("pdf_document", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   filePath: text("filePath").notNull(),
+  fileData: text("fileData"), // base64 encoded PDF for Vercel-compatible storage
   extractedText: text("extractedText"),
   userId: text("userId")
     .notNull()
