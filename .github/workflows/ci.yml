@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, master, dev ]
+  pull_request:
+    branches: [ main, master, dev ]
+
+jobs:
+  build-and-test:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run Type Checks
+        run: npm run typecheck
+
+      - name: Run Build
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db"
+          BETTER_AUTH_SECRET: "ci_dummy_secret_better_auth_must_be_at_least_32_characters"
+          BETTER_AUTH_URL: "http://localhost:3000"
+          ANTHROPIC_API_KEY: "sk-ant-api03-dummykey"
+          GOOGLE_CLIENT_ID: "dummy-client-id"
+          GOOGLE_CLIENT_SECRET: "dummy-client-secret"
+        run: npm run build
