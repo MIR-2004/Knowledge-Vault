@@ -1,0 +1,1 @@
+ALTER TABLE "pdf_document" ADD COLUMN "fileData" text;
